@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Time Logger X</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Time Logger X</h1>
+
+        <div id="loginFormContainer">
+            <form id="loginForm">
+                <label for="loginName">Name:</label>
+                <input type="text" id="loginName" required>
+
+                <label for="loginIdNumber">ID Number:</label>
+                <input type="text" id="loginIdNumber" required>
+
+                <label for="loginPassword">Password:</label>
+                <input type="password" id="loginPassword" required>
+
+                <label for="loginRole">Role:</label>
+                <select id="loginRole" required>
+                    <option value="">Select Role</option>
+                    <option value="Employee">Employee</option>
+                    <option value="Manager">Manager</option>
+                </select>
+
+                <button type="button" onclick="login()">Login</button>
+            </form>
+        </div>
+
+        <div id="employeeActions" style="display:none;">
+            <h2>Employee Actions</h2>
+            <button type="button" onclick="showScreen('timeLoggerForm')">Log Time</button>
+            <button type="button" onclick="showScreen('employeeTasks')">View Tasks</button>
+            <button type="button" onclick="showScreen('employeePayslip')">View Payslip</button>
+            <button type="button" onclick="showScreen('employeeTimeLogs')">View Time Logs</button>
+            <button type="button" onclick="showScreen('employeeQuery')">Send Query</button>
+            <button type="button" onclick="logout()">Logout</button>
+        </div>
+
+        <div id="managerActions" style="display:none;">
+            <h2>Manager Actions</h2>
+            <button type="button" onclick="showScreen('taskAssignment')">Assign Tasks</button>
+            <button type="button" onclick="showScreen('tasks')">View Task Updates</button>
+            <button type="button" onclick="showScreen('employeePayslip')">View Employee Payslips</button>
+            <button type="button" onclick="showScreen('employeeTimeLogs')">View Employee Time Logs</button>
+            <button type="button" onclick="logout()">Logout</button>
+        </div>
+
+        <div id="timeLoggerForm" class="screen">
+            <h3>Log Time</h3>
+            <form>
+                <label for="idScan">Scan ID Card:</label>
+                <input type="file" id="idScan" accept="image/*" capture="camera" required>
+                <button type="button" onclick="logTime('in')">Log In</button>
+                <button type="button" onclick="logTime('out')">Log Out</button>
+            </form>
+        </div>
+
+        <div id="employeeTasks" class="screen">
+            <h3>Tasks</h3>
+            <div class="task" id="employeeTaskContainer">
+                <!-- Employee tasks will be populated dynamically -->
+            </div>
+        </div>
+
+        <div id="employeePayslip" class="screen">
+            <h3>Payslip</h3>
+            <div id="employeePayslipContainer">
+                <!-- Employee payslip will be populated dynamically -->
+            </div>
+        </div>
+
+        <div id="employeeTimeLogs" class="screen">
+            <h3>Time Logs</h3>
+            <div id="employeeTimeLogTable">
+                <!-- Employee time logs will be displayed here -->
+            </div>
+        </div>
+
+        <div id="employeeQuery" class="screen">
+            <h3>Send Query to Manager</h3>
+            <form id="queryForm">
+                <label for="queryText">Your Query:</label>
+                <textarea id="queryText" rows="4" required></textarea>
+                <button type="button" onclick="sendQuery()">Send Query</button>
+            </form>
+            <div id="queryStatus"></div>
+        </div>
+
+        <div id="tasks" class="screen">
+            <h3>Tasks</h3>
+            <label for="taskEmployeeIdSelect">Select Employee:</label>
+            <select id="taskEmployeeIdSelect" onchange="displayTasksForManager()">
+                <!-- Options will be populated dynamically -->
+            </select>
+            <div class="task" id="taskContainer">
+                <!-- Tasks will be populated dynamically -->
+            </div>
+        </div>
+
+        <div id="taskAssignment" class="screen">
+            <h3>Assign Tasks</h3>
+            <form id="taskAssignmentForm">
+                <label for="employeeName">Employee Name:</label>
+                <input type="text" id="employeeName" required>
+                
+                <label for="taskDescription">Task Description:</label>
+                <input type="text" id="taskDescription" required>
+                
+                <label for="taskHours">Estimated Hours:</label>
+                <input type="number" id="taskHours" required>
+
+                <label for="hourlyRate">Hourly Rate:</label>
+                <input type="number" id="hourlyRate" required>
+
+                <button type="button" onclick="submitTaskAssignment()">Assign Task</button>
+            </form>
+        </div>
+
+        <div id="employeeTimeLogs" class="screen">
+            <h3>Employee Time Logs</h3>
+            <label for="employeeIdSelect">Select Employee:</label>
+            <select id="employeeIdSelect" onchange="displayTimeLogsForManager()">
+                <!-- Options will be populated dynamically -->
+            </select>
+            <div id="timeLogTable">
+                <!-- Time logs will be displayed here -->
+            </div>
+        </div>
+
+        <div id="output" class="output"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
